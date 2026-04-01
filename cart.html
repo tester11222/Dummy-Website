@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — MANOR Men's Apparel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="announcement-bar">
+    Free shipping on orders over $75 &nbsp;|&nbsp; Use code <strong>MANOR15</strong> for 15% off
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">MAN<span>OR</span></a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button title="Search" onclick="alert('Search coming soon!')">&#128269;</button>
+          <button title="Wishlist">&#10084;</button>
+          <button title="Cart" onclick="openCart()" style="position:relative">
+            &#128722;
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div>
+          <p class="page-breadcrumb"><a href="index.html">Home</a><span>&rsaquo;</span>Cart</p>
+          <h1 class="page-title">Shopping Cart</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="cartPageContent">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">MAN<span>OR</span></a>
+          <p class="footer-desc">Premium men's apparel for the discerning gentleman.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">&#128247;</a>
+            <a href="#" class="social-link">&#120143;</a>
+            <a href="#" class="social-link">f</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=shirts">Shirts</a></li>
+            <li><a href="shop.html?cat=trousers">Trousers</a></li>
+            <li><a href="shop.html?cat=jackets">Jackets</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 MANOR. All rights reserved.</p>
+        <div class="footer-payments">
+          <span class="payment-badge">VISA</span>
+          <span class="payment-badge">MC</span>
+          <span class="payment-badge">AMEX</span>
+          <span class="payment-badge">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-header">
+      <span class="cart-sidebar-title">Your Cart (<span id="cartItemCount">0</span>)</span>
+      <button class="cart-close-btn" onclick="closeCart()">&#10005;</button>
+    </div>
+    <div class="cart-sidebar-items" id="cartSidebarItems"></div>
+    <div class="cart-sidebar-footer" id="cartSidebarFooter" style="display:none">
+      <div class="sidebar-total"><span>Total</span><span id="cartSidebarTotal">$0.00</span></div>
+      <button class="sidebar-checkout-btn" onclick="window.location='cart.html'">View Cart &amp; Checkout</button>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+  <script>
+    function renderCartPage() {
+      const cart = getCart();
+      const container = document.getElementById('cartPageContent');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:100px 24px">
+            <div style="font-size:4rem;margin-bottom:20px">&#128722;</div>
+            <h2 style="font-size:1.5rem;margin-bottom:12px">Your cart is empty</h2>
+            <p style="color:#999;margin-bottom:32px">Looks like you haven't added anything yet.</p>
+            <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const shipping = subtotal >= 75 ? 0 : 9.99;
+      const tax = subtotal * 0.08;
+      const total = subtotal + shipping + tax;
+      const products = getAllProducts();
+
+      container.innerHTML = `
+        <div class="cart-layout">
+          <div>
+            <div class="cart-items" id="cartItems">
+              ${cart.map(item => {
+                const p = products.find(pr => pr.id === item.id);
+                if (!p) return '';
+                return `
+                  <div class="cart-item" id="cartPageItem-${item.id}">
+                    <a href="product.html?id=${p.id}" class="cart-item-image">
+                      <img src="${p.image}" alt="${p.name}" />
+                    </a>
+                    <div class="cart-item-details">
+                      <a href="product.html?id=${p.id}">
+                        <div class="cart-item-name">${p.name}</div>
+                      </a>
+                      <div class="cart-item-variant">Size: ${item.size || 'M'} &bull; Color: ${item.color || 'Black'}</div>
+                      <div class="cart-item-price">$${(p.price * item.qty).toFixed(2)}</div>
+                      <div class="quantity-control" style="margin-top:12px">
+                        <button class="qty-btn" onclick="updatePageQty(${item.id}, -1)">&#8722;</button>
+                        <span class="qty-value" id="pageQty-${item.id}">${item.qty}</span>
+                        <button class="qty-btn" onclick="updatePageQty(${item.id}, 1)">&#43;</button>
+                      </div>
+                    </div>
+                    <button class="cart-item-remove" onclick="removePageItem(${item.id})" title="Remove">&#10005;</button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center">
+              <a href="shop.html" style="font-size:0.88rem;font-weight:600;color:#666;display:flex;align-items:center;gap:6px">
+                &larr; Continue Shopping
+              </a>
+            </div>
+          </div>
+
+          <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal (${cart.reduce((s,i)=>s+i.qty,0)} items)</span>
+              <span>$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span class="${shipping===0?'free-shipping':''}">${shipping===0?'FREE':'$'+shipping.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%)</span>
+              <span>$${tax.toFixed(2)}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>$${total.toFixed(2)}</span>
+            </div>
+
+            <div class="promo-code-form">
+              <input type="text" placeholder="Promo code" id="promoInput" />
+              <button onclick="applyPromo()">Apply</button>
+            </div>
+
+            <button class="checkout-btn" onclick="window.location='checkout.html'">
+              Proceed to Checkout &rarr;
+            </button>
+
+            <div style="margin-top:16px;text-align:center;font-size:0.78rem;color:#999">
+              &#128274; Secure checkout &bull; SSL encrypted
+            </div>
+
+            <div style="display:flex;justify-content:center;gap:8px;margin-top:12px">
+              <span class="payment-badge" style="background:#f5f5f5;color:#999">VISA</span>
+              <span class="payment-badge" style="background:#f5f5f5;color:#999">MC</span>
+              <span class="payment-badge" style="background:#f5f5f5;color:#999">AMEX</span>
+              <span class="payment-badge" style="background:#f5f5f5;color:#999">PayPal</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updatePageQty(id, delta) {
+      updateCartQty(id, delta);
+      renderCartPage();
+    }
+
+    function removePageItem(id) {
+      removeFromCart(id);
+      renderCartPage();
+      showToast('Item removed from cart', 'success');
+    }
+
+    function applyPromo() {
+      const code = document.getElementById('promoInput').value.trim().toUpperCase();
+      if (code === 'MANOR15') {
+        showToast('Promo code applied! 15% off your order.', 'success');
+      } else if (code) {
+        showToast('Invalid promo code. Try MANOR15!', 'error');
+      }
+    }
+
+    function handleCheckout() {
+      showToast('Redirecting to checkout...', 'success');
+      setTimeout(() => alert('Checkout functionality would be implemented with a payment processor like Stripe. This is a demo store.'), 800);
+    }
+
+    renderCartPage();
+  </script>
+</body>
+</html>
