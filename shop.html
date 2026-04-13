@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — MANOR Men's Apparel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    Free shipping on orders over $75 &nbsp;|&nbsp; Use code <strong>MANOR15</strong> for 15% off your first order
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">MAN<span>OR</span></a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html" class="active">Shop</a></li>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button title="Search" onclick="alert('Search feature coming soon!')">&#128269;</button>
+          <button title="Wishlist">&#10084;</button>
+          <button title="Cart" onclick="openCart()" style="position:relative">
+            &#128722;
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <div class="page-hero-inner">
+        <div>
+          <p class="page-breadcrumb"><a href="index.html">Home</a><span>&rsaquo;</span>Shop</p>
+          <h1 class="page-title" id="pageTitle">All Products</h1>
+        </div>
+        <p class="product-count" id="pageProductCount">Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shop Layout -->
+  <div class="container">
+    <div class="shop-layout">
+
+      <!-- Sidebar Filters -->
+      <aside class="sidebar">
+        <div class="filter-section">
+          <h3 class="filter-title">Categories</h3>
+          <div class="filter-options">
+            <label class="filter-option">
+              <input type="checkbox" value="all" onchange="filterProducts()" checked /> All
+              <span class="filter-option-count">312</span>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="shirts" onchange="filterProducts()" /> Shirts
+              <span class="filter-option-count">86</span>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="trousers" onchange="filterProducts()" /> Trousers
+              <span class="filter-option-count">64</span>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="jackets" onchange="filterProducts()" /> Jackets
+              <span class="filter-option-count">42</span>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="knitwear" onchange="filterProducts()" /> Knitwear
+              <span class="filter-option-count">38</span>
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="accessories" onchange="filterProducts()" /> Accessories
+              <span class="filter-option-count">82</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3 class="filter-title">Price Range</h3>
+          <div class="price-range">
+            <input type="range" class="price-slider" min="0" max="500" value="500" oninput="updatePrice(this)" />
+            <div class="price-range-values">
+              <span>$0</span>
+              <span id="priceMax">$500</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3 class="filter-title">Color</h3>
+          <div class="color-swatches">
+            <div class="color-swatch active" style="background:#1a1a1a" title="Black" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#fff;border:1.5px solid #ccc" title="White" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#4a6fa5" title="Navy" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#8b4513" title="Brown" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#6b7c5a" title="Olive" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#c0c0c0" title="Grey" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#c9a96e" title="Camel" onclick="toggleColor(this)"></div>
+            <div class="color-swatch" style="background:#dc143c" title="Burgundy" onclick="toggleColor(this)"></div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3 class="filter-title">Size</h3>
+          <div class="size-grid">
+            <button class="size-btn" onclick="toggleSize(this)">XS</button>
+            <button class="size-btn active" onclick="toggleSize(this)">S</button>
+            <button class="size-btn active" onclick="toggleSize(this)">M</button>
+            <button class="size-btn active" onclick="toggleSize(this)">L</button>
+            <button class="size-btn active" onclick="toggleSize(this)">XL</button>
+            <button class="size-btn" onclick="toggleSize(this)">XXL</button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h3 class="filter-title">Sort By</h3>
+          <div class="filter-options">
+            <label class="filter-option">
+              <input type="radio" name="sort" value="featured" checked onchange="sortProducts(this)" /> Featured
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="sort" value="newest" onchange="sortProducts(this)" /> Newest
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="sort" value="price-low" onchange="sortProducts(this)" /> Price: Low to High
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="sort" value="price-high" onchange="sortProducts(this)" /> Price: High to Low
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="sort" value="rating" onchange="sortProducts(this)" /> Top Rated
+            </label>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Main -->
+      <main class="shop-main">
+        <div class="shop-toolbar">
+          <p class="results-count" id="resultsCount">Showing all products</p>
+          <select class="sort-select" onchange="this.value && (document.querySelector(`input[value='${this.value}']`).checked = true)">
+            <option value="featured">Featured</option>
+            <option value="newest">Newest</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+        <div class="products-grid" id="shopProductsGrid"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">MAN<span>OR</span></a>
+          <p class="footer-desc">Premium men's apparel for the discerning gentleman.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">&#128247;</a>
+            <a href="#" class="social-link">&#120143;</a>
+            <a href="#" class="social-link">f</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=shirts">Shirts</a></li>
+            <li><a href="shop.html?cat=trousers">Trousers</a></li>
+            <li><a href="shop.html?cat=jackets">Jackets</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 MANOR. All rights reserved.</p>
+        <div class="footer-payments">
+          <span class="payment-badge">VISA</span>
+          <span class="payment-badge">MC</span>
+          <span class="payment-badge">AMEX</span>
+          <span class="payment-badge">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-header">
+      <span class="cart-sidebar-title">Your Cart (<span id="cartItemCount">0</span>)</span>
+      <button class="cart-close-btn" onclick="closeCart()">&#10005;</button>
+    </div>
+    <div class="cart-sidebar-items" id="cartSidebarItems">
+      <div class="cart-sidebar-empty">
+        <div class="empty-icon">&#128722;</div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-sidebar-footer" id="cartSidebarFooter" style="display:none">
+      <div class="sidebar-total">
+        <span>Total</span>
+        <span id="cartSidebarTotal">$0.00</span>
+      </div>
+      <button class="sidebar-checkout-btn" onclick="window.location='checkout.html'">Checkout</button>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+  <script>
+    // Init shop page
+    const urlParams = new URLSearchParams(window.location.search);
+    const catParam = urlParams.get('cat');
+    let shopProducts = getAllProducts();
+
+    const categoryTitles = {
+      new: 'New Arrivals', sale: 'On Sale', shirts: 'Shirts',
+      trousers: 'Trousers', jackets: 'Jackets', accessories: 'Accessories', knitwear: 'Knitwear'
+    };
+
+    if (catParam && categoryTitles[catParam]) {
+      document.getElementById('pageTitle').textContent = categoryTitles[catParam];
+      if (catParam !== 'all') {
+        shopProducts = shopProducts.filter(p =>
+          catParam === 'new' ? p.badge === 'NEW' :
+          catParam === 'sale' ? p.badge === 'SALE' :
+          p.category.toLowerCase() === catParam
+        );
+      }
+    }
+
+    document.getElementById('pageProductCount').textContent = shopProducts.length + ' products';
+    document.getElementById('resultsCount').textContent = `Showing ${shopProducts.length} products`;
+    renderProducts('shopProductsGrid', shopProducts);
+
+    function filterProducts() { /* Decorative — real impl would filter */ }
+    function sortProducts(el) { /* Decorative */ }
+    function updatePrice(el) { document.getElementById('priceMax').textContent = '$' + el.value; }
+    function toggleColor(el) {
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function toggleSize(el) { el.classList.toggle('active'); }
+  </script>
+</body>
+</html>

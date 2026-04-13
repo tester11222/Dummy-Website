@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — MANOR Men's Apparel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="announcement-bar">
+    Free shipping on orders over $75 &nbsp;|&nbsp; Use code <strong>MANOR15</strong> for 15% off
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">MAN<span>OR</span></a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html" class="active">Shop</a></li>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button title="Search" onclick="alert('Search coming soon!')">&#128269;</button>
+          <button title="Wishlist">&#10084;</button>
+          <button title="Cart" onclick="openCart()" style="position:relative">
+            &#128722;
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="product-detail">
+
+      <!-- Breadcrumb -->
+      <p class="page-breadcrumb" style="margin-bottom:32px; color:#999; font-size:0.82rem;">
+        <a href="index.html" style="color:#999">Home</a>
+        <span style="margin:0 8px">&rsaquo;</span>
+        <a href="shop.html" style="color:#999">Shop</a>
+        <span style="margin:0 8px">&rsaquo;</span>
+        <span id="breadcrumbProduct" style="color:#333">Product</span>
+      </p>
+
+      <div class="product-detail-grid" id="productDetailContent">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Related Products -->
+      <div style="margin-top:80px;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">You May Also Like</h2>
+            <p class="section-subtitle" style="margin-bottom:0">Complete your look</p>
+          </div>
+          <a href="shop.html" class="view-all-link">View All &rarr;</a>
+        </div>
+        <div class="products-grid" style="margin-top:32px" id="relatedProducts"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">MAN<span>OR</span></a>
+          <p class="footer-desc">Premium men's apparel for the discerning gentleman.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">&#128247;</a>
+            <a href="#" class="social-link">&#120143;</a>
+            <a href="#" class="social-link">f</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=shirts">Shirts</a></li>
+            <li><a href="shop.html?cat=trousers">Trousers</a></li>
+            <li><a href="shop.html?cat=jackets">Jackets</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 MANOR. All rights reserved.</p>
+        <div class="footer-payments">
+          <span class="payment-badge">VISA</span>
+          <span class="payment-badge">MC</span>
+          <span class="payment-badge">AMEX</span>
+          <span class="payment-badge">PayPal</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-header">
+      <span class="cart-sidebar-title">Your Cart (<span id="cartItemCount">0</span>)</span>
+      <button class="cart-close-btn" onclick="closeCart()">&#10005;</button>
+    </div>
+    <div class="cart-sidebar-items" id="cartSidebarItems">
+      <div class="cart-sidebar-empty">
+        <div class="empty-icon">&#128722;</div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-sidebar-footer" id="cartSidebarFooter" style="display:none">
+      <div class="sidebar-total">
+        <span>Total</span>
+        <span id="cartSidebarTotal">$0.00</span>
+      </div>
+      <button class="sidebar-checkout-btn" onclick="window.location='checkout.html'">Checkout</button>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = parseInt(params.get('id')) || 1;
+    const product = getAllProducts().find(p => p.id === productId) || getAllProducts()[0];
+
+    document.title = product.name + ' — MANOR';
+    document.getElementById('breadcrumbProduct').textContent = product.name;
+
+    const colors = ['#1a1a1a', '#4a6fa5', '#8b4513', '#c0c0c0'];
+    const colorNames = ['Black', 'Navy', 'Brown', 'Grey'];
+
+    document.getElementById('productDetailContent').innerHTML = `
+      <div class="product-gallery">
+        <div class="thumbnail-list">
+          ${[product.image, product.image, product.image, product.image].map((img, i) => `
+            <div class="thumbnail ${i===0?'active':''}" onclick="switchImage('${img}', this)">
+              <img src="${img}" alt="View ${i+1}" />
+            </div>
+          `).join('')}
+        </div>
+        <div class="main-image">
+          <img src="${product.image}" alt="${product.name}" id="mainProductImage" />
+        </div>
+      </div>
+      <div class="product-info-detail">
+        <p class="product-category-tag">${product.category}</p>
+        <h1 class="product-detail-name">${product.name}</h1>
+        <div class="product-detail-rating">
+          <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5-Math.floor(product.rating))}</span>
+          <span class="rating-score">${product.rating}</span>
+          <span class="review-count">${product.reviews} reviews</span>
+        </div>
+        <div class="product-detail-price">
+          <span class="detail-price-current">$${product.price}</span>
+          ${product.originalPrice ? `<span class="detail-price-original">$${product.originalPrice}</span>` : ''}
+          ${product.originalPrice ? `<span class="detail-price-off">${Math.round((1-product.price/product.originalPrice)*100)}% OFF</span>` : ''}
+        </div>
+
+        <hr class="divider" />
+
+        <p class="detail-label">Color — <span style="font-weight:400;text-transform:none;letter-spacing:0" id="selectedColor">${colorNames[0]}</span></p>
+        <div class="color-selector" style="margin-bottom:24px">
+          ${colors.map((c, i) => `
+            <div class="color-option ${i===0?'selected':''}" style="background:${c}${c==='#fff'?';border:1.5px solid #ccc':''}"
+              onclick="selectColor(this, '${colorNames[i]}')" title="${colorNames[i]}"></div>
+          `).join('')}
+        </div>
+
+        <p class="detail-label">Size — <span style="font-weight:400;text-transform:none;letter-spacing:0" id="selectedSize">M</span></p>
+        <div class="size-selector">
+          ${['XS','S','M','L','XL','XXL'].map(s => `
+            <button class="size-option ${s==='M'?'selected':''}" onclick="selectSize(this)">${s}</button>
+          `).join('')}
+        </div>
+
+        <div class="add-to-cart-section">
+          <div class="quantity-control">
+            <button class="qty-btn" onclick="changeDetailQty(-1)">&#8722;</button>
+            <span class="qty-value" id="detailQty">1</span>
+            <button class="qty-btn" onclick="changeDetailQty(1)">&#43;</button>
+          </div>
+          <button class="add-btn" onclick="addProductToCart(${product.id})">Add to Cart</button>
+          <button class="wishlist-btn" onclick="this.style.color='#e53935'; this.style.borderColor='#e53935';" title="Add to Wishlist">&#10084;</button>
+        </div>
+
+        <div class="product-features">
+          <div class="product-feature">
+            <span class="feature-icon">&#10003;</span>
+            Premium quality fabrics — 100% Supima Cotton
+          </div>
+          <div class="product-feature">
+            <span class="feature-icon">&#10003;</span>
+            Free shipping &amp; free returns on all orders
+          </div>
+          <div class="product-feature">
+            <span class="feature-icon">&#10003;</span>
+            Ethically made in Portugal
+          </div>
+          <div class="product-feature">
+            <span class="feature-icon">&#10003;</span>
+            Secure checkout — SSL encrypted
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <p style="font-size:0.88rem;color:#666;line-height:1.7;">
+          ${product.name} is crafted from premium materials with meticulous attention to detail.
+          Designed for the modern gentleman who demands both style and comfort.
+          Versatile enough for the office or weekend, this piece will quickly become a wardrobe staple.
+        </p>
+      </div>
+    `;
+
+    renderProducts('relatedProducts', getAllProducts().filter(p => p.id !== product.id && p.category === product.category).slice(0, 4));
+    if (document.getElementById('relatedProducts').children.length < 4) {
+      renderProducts('relatedProducts', getAllProducts().filter(p => p.id !== product.id).slice(0, 4));
+    }
+
+    let detailQty = 1;
+    function changeDetailQty(d) {
+      detailQty = Math.max(1, detailQty + d);
+      document.getElementById('detailQty').textContent = detailQty;
+    }
+    function switchImage(src, el) {
+      document.getElementById('mainProductImage').src = src;
+      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function selectColor(el, name) {
+      document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('selectedColor').textContent = name;
+    }
+    function selectSize(el) {
+      document.querySelectorAll('.size-option').forEach(s => s.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('selectedSize').textContent = el.textContent;
+    }
+    function addProductToCart(id) {
+      const size = document.getElementById('selectedSize').textContent;
+      const color = document.getElementById('selectedColor').textContent;
+      for (let i = 0; i < detailQty; i++) {
+        addToCart(id, size, color);
+      }
+    }
+  </script>
+</body>
+</html>

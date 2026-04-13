@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — MANOR Men's Apparel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── About page specific styles ── */
+
+    /* Hero */
+    .about-hero {
+      position: relative;
+      height: 85vh;
+      min-height: 560px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    .about-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .about-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    }
+    .about-hero-content {
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      padding: 0 0 72px;
+      width: 100%;
+    }
+    .about-hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .about-hero-title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.0;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+    .about-hero-title span { color: var(--accent); }
+    .about-hero-desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── Intro split ── */
+    .intro-section {
+      padding: 96px 0;
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .intro-image {
+      position: relative;
+    }
+    .intro-image img {
+      width: 100%;
+      border-radius: 12px;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+    }
+    .intro-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--black);
+      color: var(--white);
+      padding: 24px 28px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .intro-badge-num {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .intro-badge-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-top: 6px;
+    }
+    .intro-text {}
+    .intro-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .intro-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .intro-body {
+      color: var(--gray);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .intro-body strong { color: var(--dark); font-weight: 600; }
+    .intro-signature {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .signature-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--gray-bg);
+      overflow: hidden;
+    }
+    .signature-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .signature-name { font-size: 0.95rem; font-weight: 700; }
+    .signature-title { font-size: 0.78rem; color: var(--gray-light); margin-top: 2px; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      background: var(--black);
+      padding: 56px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      text-align: center;
+    }
+    .stat-item {
+      padding: 8px 0;
+      border-right: 1px solid #2a2a2a;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item .stat-number {
+      display: block;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-item .stat-label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Values ── */
+    .values-section { padding: 96px 0; background: var(--gray-bg); }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .value-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 36px 32px;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .value-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+    .value-icon {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .value-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .value-desc {
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ── Timeline / Story ── */
+    .story-section { padding: 96px 0; }
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 64px auto 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: #e8e8e8;
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 56px;
+      position: relative;
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 12px;
+      width: 14px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--accent);
+      z-index: 1;
+    }
+    .timeline-item:nth-child(odd) .timeline-content { grid-column: 1; text-align: right; padding-right: 40px; }
+    .timeline-item:nth-child(odd) .timeline-spacer { grid-column: 2; }
+    .timeline-item:nth-child(even) .timeline-content { grid-column: 2; padding-left: 40px; }
+    .timeline-item:nth-child(even) .timeline-spacer { grid-column: 1; grid-row: 1; }
+    .timeline-year {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .timeline-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .timeline-text { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+
+    /* ── Team ── */
+    .team-section { padding: 96px 0; background: var(--gray-bg); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .team-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .team-card:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+    .team-photo {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #e8e8e8;
+    }
+    .team-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .team-card:hover .team-photo img { transform: scale(1.05); }
+    .team-info { padding: 20px 20px 24px; }
+    .team-name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .team-role { font-size: 0.78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .team-bio { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── Sustainability ── */
+    .sustainability-section { padding: 96px 0; }
+    .sus-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 56px;
+    }
+    .sus-image img {
+      width: 100%;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+    .sus-points { display: flex; flex-direction: column; gap: 24px; }
+    .sus-point {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .sus-icon {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .sus-point-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .sus-point-text { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── Certifications ── */
+    .certs-strip {
+      background: var(--gray-bg);
+      padding: 48px 0;
+      border-top: 1px solid #e8e8e8;
+    }
+    .certs-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .cert-badge {
+      background: var(--white);
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+    .cert-icon { font-size: 1.4rem; }
+
+    /* ── Press ── */
+    .press-section { padding: 72px 0; }
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .press-card {
+      background: var(--gray-bg);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .press-outlet {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      color: var(--gray-dark);
+    }
+    .press-quote {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .press-date { font-size: 0.75rem; color: var(--gray-light); font-weight: 600; }
+
+    /* ── CTA banner ── */
+    .about-cta {
+      background: var(--black);
+      padding: 80px 0;
+      text-align: center;
+      color: var(--white);
+    }
+    .about-cta-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .about-cta-sub {
+      color: #888;
+      font-size: 1rem;
+      margin-bottom: 36px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .about-cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .intro-grid, .sus-grid { grid-template-columns: 1fr; gap: 40px; }
+      .intro-badge { right: 0; bottom: -16px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .press-grid { grid-template-columns: 1fr; }
+      .timeline::before { left: 20px; }
+      .timeline-item { grid-template-columns: 1fr; padding-left: 48px; }
+      .timeline-item::after { left: 20px; }
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content { grid-column: 1; text-align: left; padding: 0; }
+      .timeline-item:nth-child(odd) .timeline-spacer,
+      .timeline-item:nth-child(even) .timeline-spacer { display: none; }
+    }
+    @media (max-width: 480px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="announcement-bar">
+    Free shipping on orders over $75 &nbsp;|&nbsp; Use code <strong>MANOR15</strong> for 15% off your first order
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">MAN<span>OR</span></a>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button title="Search" onclick="alert('Search coming soon!')">&#128269;</button>
+          <button title="Wishlist">&#10084;</button>
+          <button title="Cart" onclick="openCart()" style="position:relative">
+            &#128722;
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">&#9776;</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="about-hero">
+    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1400&q=80" alt="MANOR Brand Story" />
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <div class="container">
+        <p class="about-hero-eyebrow">Our Story</p>
+        <h1 class="about-hero-title">Built for Men<br />Who <span>Mean It.</span></h1>
+        <p class="about-hero-desc">Since 2010, MANOR has stood for one thing — clothing that respects the man wearing it. Premium materials, honest craftsmanship, and a relentless commitment to quality.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTRO / FOUNDER LETTER ── -->
+  <section class="intro-section">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-image">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=80" alt="MANOR Founder" />
+          <div class="intro-badge">
+            <span class="intro-badge-num">15</span>
+            <span class="intro-badge-label">Years of Excellence</span>
+          </div>
+        </div>
+        <div class="intro-text">
+          <p class="intro-tag">From the Founder</p>
+          <h2 class="intro-title">A Brand Born From Frustration</h2>
+          <p class="intro-body">
+            In 2010, I walked into store after store looking for a shirt that fit well, felt premium, and would last more than a season. I found nothing. Either the quality was there but the fit wasn't, or the price was absurd with nothing to justify it.
+          </p>
+          <p class="intro-body">
+            So I started MANOR out of a small studio in New York with one simple rule: <strong>make clothes I would actually wear</strong>. No shortcuts on fabric. No compromises on construction. No inflated brand tax.
+          </p>
+          <p class="intro-body">
+            Fifteen years later, we've grown from a one-room operation to a team of 80 people across three continents — but that rule has never changed. Every piece we make goes through the same rigorous process. Every fabric is chosen by hand. Every stitch is accountable to the man who will wear it.
+          </p>
+          <div class="intro-signature">
+            <div class="signature-avatar">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="Founder" />
+            </div>
+            <div>
+              <div class="signature-name">Daniel Hargrove</div>
+              <div class="signature-title">Founder &amp; Creative Director, MANOR</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS BAR ── -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">500K+</span>
+          <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Countries Served</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Premium Styles</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Satisfaction Rate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VALUES ── -->
+  <section class="values-section">
+    <div class="container">
+      <div style="text-align:center">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">What We Stand For</p>
+        <h2 class="section-title">Our Core Values</h2>
+        <p class="section-subtitle" style="margin-bottom:0">The principles that guide every decision we make</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-icon">&#129526;</span>
+          <h3 class="value-title">Uncompromising Quality</h3>
+          <p class="value-desc">We source only the finest materials — Supima cotton, Italian wool, Portuguese linen. Every fabric passes a 14-point quality check before a single stitch is made. We'd rather discontinue a line than lower our standards.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#9881;</span>
+          <h3 class="value-title">Honest Craftsmanship</h3>
+          <p class="value-desc">Our garments are made in family-owned factories in Portugal and Italy, where artisans with decades of experience bring each piece to life. We visit every partner factory in person, every year — no exceptions.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#127807;</span>
+          <h3 class="value-title">Responsible Fashion</h3>
+          <p class="value-desc">Fast fashion is not our model. We design for longevity, not for landfill. Every MANOR product is made to last years, not seasons. We also offset 100% of our shipping emissions and use recycled packaging exclusively.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#128205;</span>
+          <h3 class="value-title">Radical Transparency</h3>
+          <p class="value-desc">We publish our full supply chain — who makes what, where, and how much we pay them. You deserve to know where your clothes come from. No hidden factories, no greenwashing.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#128100;</span>
+          <h3 class="value-title">Customer First, Always</h3>
+          <p class="value-desc">Free returns, lifetime alterations, and a 365-day satisfaction guarantee. If a MANOR piece ever fails to meet your expectations, we make it right — no questions asked. This is our promise.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#127758;</span>
+          <h3 class="value-title">Global Community</h3>
+          <p class="value-desc">From New York to Tokyo, Lagos to Dubai — MANOR belongs to men everywhere. We celebrate diversity in style and culture, and we design pieces that transcend borders and speak a universal language of elegance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ── -->
+  <section class="story-section">
+    <div class="container">
+      <div style="text-align:center">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">How We Got Here</p>
+        <h2 class="section-title">Our Journey</h2>
+        <p class="section-subtitle" style="margin-bottom:0">Fifteen years of growth, learning, and relentless improvement</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2010</div>
+            <div class="timeline-title">The First Shirt</div>
+            <div class="timeline-text">Daniel Hargrove launches MANOR from a 400 sq ft studio in Manhattan, selling hand-crafted Oxford shirts directly to customers. First 100 shirts sell out in 48 hours.</div>
+          </div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2012</div>
+            <div class="timeline-title">First Factory Partnership</div>
+            <div class="timeline-text">We partner with the Mendes family's 3rd-generation atelier in Porto, Portugal. This partnership still powers over 60% of our production today. Quality becomes our defining trait.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2014</div>
+            <div class="timeline-title">100,000 Customers</div>
+            <div class="timeline-text">MANOR crosses the 100,000 customer milestone and expands into trousers, knitwear, and outerwear. Opens first physical showroom in New York's Soho neighborhood.</div>
+          </div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2017</div>
+            <div class="timeline-title">Sustainability Pledge</div>
+            <div class="timeline-text">MANOR becomes one of the first menswear brands to publish a full supply chain transparency report. We commit to carbon-neutral shipping and 100% recycled packaging by 2020 — and deliver 8 months early.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-title">Global Expansion</div>
+            <div class="timeline-text">Despite global challenges, MANOR launches international shipping to 50+ countries and surpasses $50M in annual revenue. The team grows to 80 people across 4 offices worldwide.</div>
+          </div>
+          <div class="timeline-spacer"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-spacer"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2025</div>
+            <div class="timeline-title">The Next Chapter</div>
+            <div class="timeline-text">With 500,000 customers across 50 countries, MANOR launches its most ambitious collection yet — and continues to push the boundaries of what premium menswear can be.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEAM ── -->
+  <section class="team-section">
+    <div class="container">
+      <div style="text-align:center">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">The People Behind MANOR</p>
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="section-subtitle" style="margin-bottom:0">Passionate individuals united by a love of great clothes</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Daniel Hargrove" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Daniel Hargrove</div>
+            <div class="team-role">Founder &amp; Creative Director</div>
+            <div class="team-bio">15 years building MANOR from a Manhattan studio into a global brand. Former buyer at Barneys, graduate of Parsons School of Design.</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Sofia Reyes" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Sofia Reyes</div>
+            <div class="team-role">Head of Design</div>
+            <div class="team-bio">Led design teams at Zegna and Tom Ford before joining MANOR. Her philosophy: clothing should empower, never distract. Based in Milan.</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Marcus Webb" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Marcus Webb</div>
+            <div class="team-role">Head of Sourcing</div>
+            <div class="team-bio">Spent 12 years traveling the globe's finest textile mills. Every MANOR fabric passes through Marcus before it reaches our customers. The ultimate gatekeeper of quality.</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Aisha Okonkwo" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Aisha Okonkwo</div>
+            <div class="team-role">Director of Sustainability</div>
+            <div class="team-bio">Environmental scientist turned fashion advocate. Aisha leads our commitment to responsible manufacturing and has cut our carbon footprint by 40% in three years.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUSTAINABILITY ── -->
+  <section class="sustainability-section">
+    <div class="container">
+      <div style="text-align:center">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Our Commitment</p>
+        <h2 class="section-title">Fashion That Respects the Planet</h2>
+        <p class="section-subtitle" style="margin-bottom:0">Sustainability isn't a marketing term for us — it's how we operate</p>
+      </div>
+      <div class="sus-grid">
+        <div class="sus-image">
+          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="Sustainable Fashion" />
+        </div>
+        <div class="sus-points">
+          <div class="sus-point">
+            <div class="sus-icon">&#9851;</div>
+            <div>
+              <div class="sus-point-title">100% Recycled Packaging</div>
+              <div class="sus-point-text">Every box, bag, tissue paper, and label we use is made from post-consumer recycled materials. We eliminated virgin plastic from our supply chain entirely in 2020.</div>
+            </div>
+          </div>
+          <div class="sus-point">
+            <div class="sus-icon">&#127759;</div>
+            <div>
+              <div class="sus-point-title">Carbon-Neutral Shipping</div>
+              <div class="sus-point-text">We offset 100% of the carbon emissions generated by every shipment, worldwide. We partner with verified reforestation projects in Brazil, Kenya, and Indonesia.</div>
+            </div>
+          </div>
+          <div class="sus-point">
+            <div class="sus-icon">&#128119;</div>
+            <div>
+              <div class="sus-point-title">Fair Wages, Always</div>
+              <div class="sus-point-text">Every factory worker in our supply chain earns at least 150% of the local living wage. We audit all partner factories annually — unannounced — and publish the results publicly.</div>
+            </div>
+          </div>
+          <div class="sus-point">
+            <div class="sus-icon">&#127807;</div>
+            <div>
+              <div class="sus-point-title">Low-Impact Fabrics</div>
+              <div class="sus-point-text">We prioritize natural, renewable, and low-impact materials. 85% of our collection uses certified organic cotton, recycled wool, or TENCEL&trade; lyocell. We're targeting 100% by 2026.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATIONS ── -->
+  <div class="certs-strip">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:28px">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light)">Certified &amp; Verified By</p>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-badge"><span class="cert-icon">&#9989;</span> GOTS Certified Organic</div>
+        <div class="cert-badge"><span class="cert-icon">&#9989;</span> Fair Trade Certified</div>
+        <div class="cert-badge"><span class="cert-icon">&#9989;</span> B Corp Certified</div>
+        <div class="cert-badge"><span class="cert-icon">&#9989;</span> Carbon Neutral Certified</div>
+        <div class="cert-badge"><span class="cert-icon">&#9989;</span> OEKO-TEX Standard 100</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRESS ── -->
+  <section class="press-section">
+    <div class="container">
+      <div style="text-align:center">
+        <p style="font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px">As Seen In</p>
+        <h2 class="section-title">What the Press Says</h2>
+      </div>
+      <div class="press-grid">
+        <div class="press-card">
+          <div class="press-outlet">GQ Magazine</div>
+          <p class="press-quote">"MANOR has quietly become the gold standard in men's everyday luxury. The kind of brand that serious dressers know about but rarely talk about — because they don't want everyone else to find out."</p>
+          <div class="press-date">March 2025 &bull; Style of the Year</div>
+        </div>
+        <div class="press-card">
+          <div class="press-outlet">Esquire</div>
+          <p class="press-quote">"If there's one brand redefining what it means to dress well without trying too hard, it's MANOR. The shirts alone are worth the price of admission."</p>
+          <div class="press-date">January 2025 &bull; Best Menswear Brands</div>
+        </div>
+        <div class="press-card">
+          <div class="press-outlet">Forbes</div>
+          <p class="press-quote">"MANOR is proof that sustainable fashion and premium quality are not mutually exclusive. A blueprint for how modern fashion brands should operate."</p>
+          <div class="press-date">November 2024 &bull; The Future of Fashion</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="about-cta">
+    <div class="container">
+      <h2 class="about-cta-title">Ready to Elevate Your Wardrobe?</h2>
+      <p class="about-cta-sub">Join over 500,000 men who've made MANOR their standard. Free shipping. Free returns. No compromises.</p>
+      <div class="about-cta-actions">
+        <a href="shop.html" class="btn btn-accent">Shop the Collection &rarr;</a>
+        <a href="shop.html?cat=new" class="btn btn-outline" style="color:#fff;border-color:#fff;">New Arrivals</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">MAN<span>OR</span></a>
+          <p class="footer-desc">Premium men's apparel for the discerning gentleman. Quality craftsmanship, timeless style, built to last.</p>
+          <div class="social-links">
+            <a href="#" class="social-link" title="Instagram">&#128247;</a>
+            <a href="#" class="social-link" title="Twitter">&#120143;</a>
+            <a href="#" class="social-link" title="Facebook">f</a>
+            <a href="#" class="social-link" title="Pinterest">P</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?cat=new">New Arrivals</a></li>
+            <li><a href="shop.html?cat=shirts">Shirts</a></li>
+            <li><a href="shop.html?cat=trousers">Trousers</a></li>
+            <li><a href="shop.html?cat=jackets">Jackets</a></li>
+            <li><a href="shop.html?cat=accessories">Accessories</a></li>
+            <li><a href="shop.html?cat=sale">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns &amp; Exchanges</a></li>
+            <li><a href="#">Track Your Order</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">Our Story</a></li>
+            <li><a href="about.html#sustainability">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; 2025 MANOR. All rights reserved.</p>
+        <div class="footer-payments">
+          <span class="payment-badge">VISA</span>
+          <span class="payment-badge">MC</span>
+          <span class="payment-badge">AMEX</span>
+          <span class="payment-badge">PayPal</span>
+          <span class="payment-badge">Apple Pay</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-sidebar-header">
+      <span class="cart-sidebar-title">Your Cart (<span id="cartItemCount">0</span>)</span>
+      <button class="cart-close-btn" onclick="closeCart()">&#10005;</button>
+    </div>
+    <div class="cart-sidebar-items" id="cartSidebarItems">
+      <div class="cart-sidebar-empty">
+        <div class="empty-icon">&#128722;</div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-sidebar-footer" id="cartSidebarFooter" style="display:none">
+      <div class="sidebar-total">
+        <span>Total</span>
+        <span id="cartSidebarTotal">$0.00</span>
+      </div>
+      <button class="sidebar-checkout-btn" onclick="window.location='checkout.html'">Checkout</button>
+    </div>
+  </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
